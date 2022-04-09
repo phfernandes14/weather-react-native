@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View,Text } from 'react-native';
+import * as Location from 'expo-location';
 
 export default function App() {
+
+  const [localizacao, setLocalizacao] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permissão de acesso a localizacao foi negada!');
+        return;
+      }
+      let localizacao = await Location.getCurrentPositionAsync({});
+      setLocalizacao(localizacao);
+    })();
+  }, []);
+
+  if (errorMsg) {
+  } else if (localizacao) {
+   
+    var lat = localizacao.coords.latitude;
+    var long = localizacao.coords.longitude;
+
+    console.log("Latituide: ", lat)
+    console.log("Longitude: ", long)
+
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <Text>teste</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
