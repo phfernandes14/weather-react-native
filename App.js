@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { MotiView } from 'moti'
+
 import * as Location from 'expo-location';
+
+import 'react-native-reanimated'
 
 import Header from './src/components/Header'
 import Body from './src/components/Body';
@@ -72,7 +76,11 @@ export default function App() {
           : <View>
             {
               (render == 'true') ?
-                <View>
+                <MotiView
+                from={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ type: 'timing' }}
+                >
                   <Header
                     data={dados}
                   />
@@ -83,7 +91,7 @@ export default function App() {
                     data={dados}
                   />
 
-                </View>
+                </MotiView>
                 : <Text style={styles.Conectando}>🕐 Conectando com a API HG Weather ... </Text>
             }
           </View>
