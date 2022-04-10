@@ -1,20 +1,21 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native'
+import {View, Text, Image} from 'react-native';
+
+import { styles } from './style';
 
 export default function Body(data){
-    const dados = data
-    console.log(dados.data.url)
-    
+    const dados = data;
     return(
         <View>
-            <Image
-             style={{width: '250px', height: '250px'}}
-             source={{uri: dados.data.url}}></Image>
-            <Text>Umidade: {dados.data.humidade}</Text>
-            <Text>Velocidade do Vento: {dados.data.humidade}</Text>
-            <Text>Nascer do Sol: {dados.data.nascer}</Text>
-            <Text>Por do Sol: {dados.data.por}</Text>
-            <Text>{dados.data.cidade},{dados.data.time}</Text>
+             <Image
+             style={styles.imagem}
+             source={{uri: dados.data.url}}
+             ></Image>
+             <Text style={styles.texts}> 🌫 Umidade do Ar: {dados.data.humidade}%</Text>
+             <Text style={styles.texts}> 💨 Velocidade do Vento: {dados.data.velocidadeVento}</Text>
+             <Text style={styles.texts}> ☀️ Nascer do Sol: {dados.data.nascer}</Text>
+             <Text style={styles.texts}> 🌙 Por do Sol: {dados.data.por}</Text>
+             <Text style={styles.texts}> 📌{dados.data.cidade}, {dados.data.time}</Text>
         </View>
     )
 }

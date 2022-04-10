@@ -1,12 +1,14 @@
 import React from 'react';
-import {View, Text} from 'react-native'
+import {View, Text} from 'react-native';
+
+import { styles } from './style';
 
 export default function Header(data){
-    const dados = data
+    const dados = data;
     return(
         <View>
-            <Text>{dados.data.temperatura}°</Text>
-            <Text>{dados.data.descricao}</Text>
+            <Text style={styles.temperatura} >{dados.data.temperatura}°</Text>
+            <Text style={styles.descricao}>{dados.data.descricao} ... </Text>
         </View>
     )
 }

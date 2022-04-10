@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
+
 import Header from './src/components/Header'
 import Body from './src/components/Body';
+import Footer from './src/components/Footer';
 
 export default function App() {
 
@@ -11,14 +13,12 @@ export default function App() {
   const [dados, setDados] = useState(Object);
   const [render, setRender] = useState('false');
 
-
-
   /** Obtendo Geolocalizacao com Location */
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permissão de acesso a localizacao foi negada!');
+        setErrorMsg('Permissão de acesso a localizacao foi negada !!!');
         return;
       }
       let localizacao = await Location.getCurrentPositionAsync({});
@@ -30,8 +30,6 @@ export default function App() {
   } else if (localizacao) {
     var lat = localizacao.coords.latitude;
     var long = localizacao.coords.longitude;
-    // console.log("Latituide: ", lat)
-    //console.log("Longitude: ", long)
   }
 
   /**Fetch API */
@@ -46,7 +44,6 @@ export default function App() {
     await fetch(url)
       .then(response => response.json())
       .then(data => {
-        //console.log(data)
         const dados = {
           temperatura: data.results.temp,
           descricao: data.results.description,
@@ -57,13 +54,11 @@ export default function App() {
           nascer: data.results.sunrise,
           por: data.results.sunset,
           cidade: data.results.city,
-          time: data.results.time
-
-
+          time: data.results.time,
+          previsoes: data.results.forecast
         }
         setDados(dados);
         setRender('true');
-        console.log(data)
       })
       .catch(function (error) {
         console.error('Houve um problema ao efetuar a requisição: ' + error.message);
@@ -71,24 +66,41 @@ export default function App() {
   }
 
   return (
-    <View>
+    <View style={styles.Principal}>
       {
-        (errorMsg)?<Text>{errorMsg}</Text>
-        :<View>
-          {
-            (render == 'true')?
-              <View>
-                <Header
-                data={dados}
-                />
-                <Body
-                data={dados}
-                />
-              </View>
-            :<Text>Ocorreu um erro ao conectar com a API HG Weather</Text>
+        (errorMsg) ? <Text style={styles.Conectando}>⚠️ {errorMsg}</Text>
+          : <View>
+            {
+              (render == 'true') ?
+                <View>
+                  <Header
+                    data={dados}
+                  />
+                  <Body
+                    data={dados}
+                  />
+                  <Footer
+                    data={dados}
+                  />
+
+                </View>
+                : <Text style={styles.Conectando}>🕐 Conectando com a API HG Weather ... </Text>
             }
           </View>
       }
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  Principal: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  Conectando: {
+    fontWeight: 'bold',
+    fontStyle: 'italic'
+  }
+})
