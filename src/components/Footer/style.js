@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    centeredView: {
+    centralView: {
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 20,
         padding: 15,
-        paddingTop:45,
+        paddingTop: 45,
         paddingBottom: 20,
         shadowColor: '#000',
         shadowOffset: {
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
-    textClose: {
+    textFechar: {
         alignItems: 'center',
         marginTop: 8
     },
@@ -31,10 +31,10 @@ export const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
     },
-    buttonOpen: {
+    buttonAbrir: {
         backgroundColor: '#2196F3',
     },
-    buttonClose: {
+    buttonFechar: {
         backgroundColor: 'red',
     },
     textStyle: {
@@ -47,11 +47,19 @@ export const styles = StyleSheet.create({
         lineHeight: 30,
         fontWeight: 'bold',
         fontSize: 15,
-        marginTop:8
+        marginTop: 8
     },
-    linha:{
+    linha: {
         borderBottomColor: 'black',
         borderBottomWidth: 1,
-        marginBottom: 5
-     }
+        marginBottom: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 4,
+        elevation: 5,
+    }
 });

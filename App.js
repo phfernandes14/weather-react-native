@@ -18,7 +18,7 @@ export default function App() {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permissão de acesso a localizacao foi negada !!!');
+        setErrorMsg('Permissão de acesso a localização foi negada !');
         return;
       }
       let localizacao = await Location.getCurrentPositionAsync({});
@@ -26,8 +26,9 @@ export default function App() {
     })();
   }, []);
 
+  /*Error msg*/
   if (errorMsg) {
-  } else if (localizacao) {
+  } else if (localizacao) { //Seta Lat/Long
     var lat = localizacao.coords.latitude;
     var long = localizacao.coords.longitude;
   }
@@ -38,12 +39,12 @@ export default function App() {
     obtemClima(lat, long);
   }, [count]);
 
-
   async function obtemClima(lat, long) {
     const url = `https://api.hgbrasil.com/weather?format=json-cors&key=8e446dda&lat=-${lat}&lon=${long}&user_ip=remote`
     await fetch(url)
       .then(response => response.json())
       .then(data => {
+        //Data Weather
         const dados = {
           temperatura: data.results.temp,
           descricao: data.results.description,
@@ -82,7 +83,6 @@ export default function App() {
                   <Footer
                     data={dados}
                   />
-
                 </View>
                 : <Text style={styles.Conectando}>🕐 Conectando com a API HG Weather ... </Text>
             }
@@ -91,7 +91,7 @@ export default function App() {
     </View>
   );
 }
-
+//Estilo Base
 const styles = StyleSheet.create({
   Principal: {
     flex: 1,
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   },
   Conectando: {
     fontWeight: 'bold',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    fontSize: 12,
   }
 })
